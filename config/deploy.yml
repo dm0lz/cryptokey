@@ -119,11 +119,12 @@ accessories:
   db:
     image: pgvector/pgvector:pg17
     host: cryptokey.email
-    port: "127.0.0.1:5432:5432"
+    port: "127.0.0.1:5434:5434"
     env:
       clear:
         POSTGRES_USER: "cryptokey"
         POSTGRES_DB: "cryptokey_production"
+        PGPORT: 5434
       secret:
         - POSTGRES_PASSWORD
     files:
