@@ -1,0 +1,32 @@
+<% content_for :title, @email.subject.presence || '(No subject)' %>
+
+<div class="min-h-screen bg-gray-50 flex flex-col items-center py-8 px-2 sm:px-6 lg:px-8">
+  <div class="w-full max-w-2xl">
+    <div class="mb-6 flex items-center justify-between">
+      <%= link_to "← Back to Inbox", emails_path, class: "text-sm font-medium text-indigo-600 hover:text-indigo-500" %>
+      <div class="space-x-2">
+        <%= button_to "Delete", @email, method: :delete, data: { turbo_confirm: "Are you sure?" }, class: "inline-flex items-center px-3 py-1.5 border border-red-300 rounded-md text-sm font-medium text-red-600 bg-white hover:bg-red-50" %>
+      </div>
+    </div>
+    <div class="bg-white shadow rounded-lg p-8">
+      <div class="flex items-center mb-4">
+        <span class="inline-flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 text-indigo-600 font-bold text-xl">
+          <%= @email.from[0].upcase rescue '?' %>
+        </span>
+        <div class="ml-4">
+          <div class="text-lg font-semibold text-gray-900"><%= @email.subject.presence || '(No subject)' %></div>
+          <div class="text-sm text-gray-500 mt-1">
+            <span>From: <span class="font-medium text-gray-700"><%= @email.from %></span></span><br>
+            <span>To: <span class="font-medium text-gray-700"><%= @email.to %></span></span><br>
+            <span><%= time_ago_in_words(@email.created_at) %> ago</span>
+          </div>
+        </div>
+      </div>
+      <div class="border-t border-gray-200 mt-4 pt-6">
+        <div class="prose prose-sm max-w-none text-gray-800 whitespace-pre-line">
+          <%= simple_format(@email.body) %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

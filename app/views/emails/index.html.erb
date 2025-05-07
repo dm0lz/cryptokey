@@ -1,0 +1,44 @@
+<% content_for :title, "Inbox" %>
+
+<div class="min-h-screen bg-gray-50 flex flex-col">
+  <header class="bg-white shadow-sm flex items-center justify-between px-6 py-4">
+    <h1 class="text-2xl font-bold text-gray-900">Inbox</h1>
+    <%= button_to 'Sign Out', session_path, method: :delete, form: {data: {turbo_confirm: 'Are you sure?'}}, class: "text-sm font-medium text-red-600 hover:text-red-800" %>
+  </header>
+
+  <main class="flex-1 flex flex-col items-center px-2 sm:px-6 lg:px-8">
+    <div class="w-full max-w-3xl mt-8">
+      <div class="flex items-center justify-between mb-6">
+        <div class="relative w-full max-w-xs">
+          <input type="text" placeholder="Search emails..." class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm" />
+          <span class="absolute left-3 top-2.5 text-gray-400">
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+          </span>
+        </div>
+        <%= link_to "New Email", new_email_path, class: "ml-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-semibold rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition" %>
+      </div>
+      <div class="bg-white shadow rounded-lg divide-y divide-gray-100">
+        <% if @emails.any? %>
+          <% @emails.each do |email| %>
+            <%= link_to email_path(email), class: "flex items-center px-4 py-4 hover:bg-gray-50 transition group" do %>
+              <div class="flex-shrink-0">
+                <span class="inline-flex items-center justify-center h-10 w-10 rounded-full bg-indigo-100 text-indigo-600 font-bold text-lg">
+                  <%= email.from[0].upcase rescue '?' %>
+                </span>
+              </div>
+              <div class="ml-4 flex-1 min-w-0">
+                <div class="flex items-center justify-between">
+                  <span class="block font-medium text-gray-900 truncate group-hover:text-indigo-700"><%= email.subject.presence || '(No subject)' %></span>
+                  <span class="ml-2 flex-shrink-0 text-xs text-gray-400"><%= time_ago_in_words(email.created_at) %> ago</span>
+                </div>
+                <span class="block text-sm text-gray-500 truncate"><%= email.body.to_s.truncate(80) %></span>
+              </div>
+            <% end %>
+          <% end %>
+        <% else %>
+          <div class="px-4 py-8 text-center text-gray-400 text-sm">No emails found.</div>
+        <% end %>
+      </div>
+    </div>
+  </main>
+</div>
