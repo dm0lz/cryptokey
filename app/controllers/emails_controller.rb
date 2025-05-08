@@ -11,6 +11,7 @@ class EmailsController < ApplicationController
         query, query, query
       )
     end
+    @emails = @emails.order(created_at: :desc)
   end
 
   # GET /emails/1 or /emails/1.json
