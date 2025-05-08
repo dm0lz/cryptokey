@@ -3,6 +3,8 @@ class EmailsMailbox < ApplicationMailbox
     Email.create!(
       from_email: mail.from&.first,
       to_email: mail.to&.first,
+      from_emails: mail.from,
+      to_emails: mail.to,
       subject: mail.subject,
       body: mail_body
     )
