@@ -1,0 +1,436 @@
+<script>
+  function toggleMobileMenu() {
+    const menu = document.getElementById('mobile-menu');
+    menu.classList.toggle('hidden');
+  }
+</script>
+<style>
+  .animate-gradient {
+    background-size: 200% 200%;
+    animation: gradient 3s ease infinite;
+  }
+
+  @keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+</style>
+<!-- Header -->
+<header class="fixed w-full z-50 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm shadow-sm">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16 sm:h-20">
+      <div class="flex items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-600 dark:text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+        </svg>
+        <span class="text-xl font-bold ml-2">cryptokey.email</span>
+      </div>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex items-center space-x-8">
+        <a href="#features" class="text-sm font-medium hover:text-blue-600 dark:hover:text-blue-400">Features</a>
+        <a href="#how-it-works" class="text-sm font-medium hover:text-blue-600 dark:hover:text-blue-400">How It Works</a>
+        <a href="#faq" class="text-sm font-medium hover:text-blue-600 dark:hover:text-blue-400">FAQ</a>
+        <%= link_to "Sign Up Free", new_registration_path, class: "px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700" %>
+      </nav>
+
+      <!-- Mobile menu button -->
+      <div class="flex md:hidden">
+        <button onclick="toggleMobileMenu()" class="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-900 shadow-lg">
+    <div class="px-2 pt-2 pb-3 space-y-1">
+      <a href="#features" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 dark:hover:bg-gray-800">Features</a>
+      <a href="#how-it-works" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 dark:hover:bg-gray-800">How It Works</a>
+      <a href="#faq" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 dark:hover:bg-gray-800">FAQ</a>
+      <a href="#" class="block px-3 py-2 rounded-md text-base font-medium bg-blue-600 text-white hover:bg-blue-700">Sign Up Free</a>
+    </div>
+  </div>
+</header>
+
+<!-- Hero Section -->
+<section class="pt-32 pb-24 md:pt-40 md:pb-32">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col lg:flex-row items-center">
+      <div class="w-full lg:w-1/2 lg:pr-16 mb-12 lg:mb-0">
+        <div class="max-w-xl mx-auto lg:mx-0">
+          <div class="inline-flex items-center px-3 py-1 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-sm font-medium mb-6">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+            <span>Free Forever</span>
+          </div>
+          <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight mb-6">
+            Secure Email for <span class="text-blue-600 dark:text-blue-500">Everyone</span>
+          </h1>
+          <p class="text-lg sm:text-xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
+            Military-grade encryption accessible to all. No subscription fees, just unobtrusive ads to keep your communications private and secure.
+          </p>
+          <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+            <%= link_to "Get Started - It's Free", new_registration_path, class: "px-8 py-4 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 text-center" %>
+            <a href="#features" class="px-8 py-4 rounded-lg bg-gray-100 dark:bg-gray-800 font-medium hover:bg-gray-200 dark:hover:bg-gray-700 text-center">
+              Learn More
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="w-full lg:w-1/2">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-6 max-w-lg mx-auto">
+          <div class="flex items-center mb-6">
+            <div class="flex space-x-2">
+              <div class="w-3 h-3 rounded-full bg-red-500"></div>
+              <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+              <div class="w-3 h-3 rounded-full bg-green-500"></div>
+            </div>
+            <div class="ml-4 flex-1 bg-gray-100 dark:bg-gray-700 rounded-md px-4 py-2 text-sm text-center">
+              secure.cryptokey.email
+            </div>
+          </div>
+          <div class="space-y-4">
+            <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-900 rounded-lg">
+              <div class="flex items-center">
+                  <!-- Shield icon -->
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600 dark:text-blue-500 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                  </svg>
+                  <span class="font-medium">End-to-End Encrypted</span>
+              </div>
+              <!-- Checkmark -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 6L9 17l-5-5"></path>
+              </svg>
+              </div>
+
+              <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-900 rounded-lg">
+              <div class="flex items-center">
+                  <!-- Inbox icon -->
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600 dark:text-blue-500 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 4h16v13H4z"></path>
+                  <path d="M4 13l4 4h8l4-4"></path>
+                  </svg>
+                  <span class="font-medium">Zero-Access Design</span>
+              </div>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 6L9 17l-5-5"></path>
+              </svg>
+              </div>
+
+              <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-900 rounded-lg">
+              <div class="flex items-center">
+                  <!-- Lightning bolt icon -->
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600 dark:text-blue-500 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M13 2L3 14h9l-1 8L21 10h-9l2-8z"></path>
+                  </svg>
+                  <span class="font-medium">Blazing Fast Delivery</span>
+              </div>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 6L9 17l-5-5"></path>
+              </svg>
+              </div>
+
+              <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-900 rounded-lg">
+              <div class="flex items-center">
+                  <!-- Globe icon -->
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600 dark:text-blue-500 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="2" y1="12" x2="22" y2="12"></line>
+                  <path d="M12 2a15.3 15.3 0 0 1 0 20"></path>
+                  <path d="M12 2a15.3 15.3 0 0 0 0 20"></path>
+                  </svg>
+                  <span class="font-medium">Self-Destructing Messages</span>
+              </div>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 6L9 17l-5-5"></path>
+              </svg>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Features Section -->
+<section id="features" class="py-24 bg-gray-50 dark:bg-gray-800/50">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <h2 class="text-3xl sm:text-4xl font-bold mb-6">Everything You Need, Completely Free</h2>
+      <p class="text-lg text-gray-600 dark:text-gray-300">
+        Enjoy premium security features without paying a dime. Supported by minimal, non-intrusive advertisements.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Feature 1 -->
+      <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm hover:shadow-md transition-all">
+        <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center mb-5">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold mb-3">End-to-End Encryption</h3>
+        <p class="text-gray-600 dark:text-gray-300">Military-grade encryption protects your messages from sender to recipient.</p>
+      </div>
+
+      <!-- Feature 2 -->
+      <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm hover:shadow-md transition-all">
+        <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center mb-5">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold mb-3">Zero-Access Design</h3>
+        <p class="text-gray-600 dark:text-gray-300">We can't read your emails even if we wanted to. Your privacy is guaranteed.</p>
+      </div>
+
+      <!-- Feature 3 -->
+      <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm hover:shadow-md transition-all">
+        <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center mb-5">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold mb-3">Self-Destructing Messages</h3>
+        <p class="text-gray-600 dark:text-gray-300">Set messages to automatically delete after a specified time period.</p>
+      </div>
+
+      <!-- Feature 4 -->
+      <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm hover:shadow-md transition-all">
+        <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center mb-5">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+            <polyline points="22,6 12,13 2,6"></polyline>
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold mb-3">Secure Attachments</h3>
+        <p class="text-gray-600 dark:text-gray-300">Files are encrypted before upload and remain secure throughout transmission.</p>
+      </div>
+
+      <!-- Feature 5 -->
+      <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm hover:shadow-md transition-all">
+        <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center mb-5">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold mb-3">Dark Mode</h3>
+        <p class="text-gray-600 dark:text-gray-300">Easy on the eyes with automatic dark mode detection and toggle.</p>
+      </div>
+
+      <!-- Feature 6 -->
+      <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm hover:shadow-md transition-all">
+        <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center mb-5">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="2" y1="12" x2="22" y2="12"></line>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold mb-3">Global Access</h3>
+        <p class="text-gray-600 dark:text-gray-300">Access your encrypted emails from anywhere in the world.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How It Works -->
+<section id="how-it-works" class="py-24">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <h2 class="text-3xl sm:text-4xl font-bold mb-6">How We Keep It Free</h2>
+      <p class="text-lg text-gray-600 dark:text-gray-300">
+        We believe privacy is a right, not a privilege. That's why we use ethical advertising to keep our service free for everyone.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="text-center p-6">
+        <div class="w-16 h-16 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center mx-auto mb-6">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.91 8.84L8.56 2.23a1.93 1.93 0 0 0-1.81 0L3.1 4.13a2.12 2.12 0 0 0-.05 3.69l12.22 6.93a2.001 2.001 0 0 0 1.94 0L21 12.51a2.12 2.12 0 0 0-.09-3.67z"></path>
+            <path d="M3.09 9.71l12.35 6.61c.57.31 1.24.31 1.81 0l3.65-1.9c1.08-.56 1.08-2.12.05-2.69L8.73 4.35a1.93 1.93 0 0 0-1.81 0L3.14 7.02c-1.08.56-1.08 2.12-.05 2.69z"></path>
+            <path d="M3.09 14.71l12.35 6.61c.57.31 1.24.31 1.81 0l3.65-1.9c1.08-.56 1.08-2.12.05-2.69L8.73 9.35a1.93 1.93 0 0 0-1.81 0l-3.78 2.67c-1.08.56-1.08 2.12-.05 2.69z"></path>
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold mb-4">Ethical Advertising</h3>
+        <p class="text-gray-600 dark:text-gray-300">
+          We display non-intrusive ads that respect your privacy and never track your behavior.
+        </p>
+      </div>
+
+      <div class="text-center p-6">
+        <div class="w-16 h-16 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center mx-auto mb-6">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold mb-4">Privacy First</h3>
+        <p class="text-gray-600 dark:text-gray-300">
+          Ads are served locally and never compromise your data or tracking information.
+        </p>
+      </div>
+
+      <div class="text-center p-6">
+        <div class="w-16 h-16 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center mx-auto mb-6">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold mb-4">Community Supported</h3>
+        <p class="text-gray-600 dark:text-gray-300">
+          Our service thrives through community support and ethical advertising revenue.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ Section -->
+<section id="faq" class="py-24 bg-gray-50 dark:bg-gray-800/50">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <h2 class="text-3xl sm:text-4xl font-bold mb-6">Frequently Asked Questions</h2>
+      <p class="text-lg text-gray-600 dark:text-gray-300">
+        Everything you need to know about our free, secure email service.
+      </p>
+    </div>
+
+    <div class="max-w-3xl mx-auto">
+      <div class="space-y-6">
+        <!-- FAQ Item 1 -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg p-6">
+          <h3 class="text-lg font-semibold mb-4">Is it really free forever?</h3>
+          <p class="text-gray-600 dark:text-gray-300">
+            Yes! We're committed to keeping cryptokey.email free forever. We sustain our service through ethical, non-intrusive advertising that never compromises your privacy.
+          </p>
+        </div>
+
+        <!-- FAQ Item 2 -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg p-6">
+          <h3 class="text-lg font-semibold mb-4">How do the ads work?</h3>
+          <p class="text-gray-600 dark:text-gray-300">
+            Our ads are privacy-respecting and locally served. They never track your behavior or compromise your data. They appear in designated areas of the interface without interrupting your email experience.
+          </p>
+        </div>
+
+        <!-- FAQ Item 3 -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg p-6">
+          <h3 class="text-lg font-semibold mb-4">Is my data really secure?</h3>
+          <p class="text-gray-600 dark:text-gray-300">
+            Absolutely. We use military-grade encryption, and our zero-access architecture means we can't read your emails even if we wanted to. Your privacy is guaranteed through end-to-end encryption.
+          </p>
+        </div>
+
+        <!-- FAQ Item 4 -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg p-6">
+          <h3 class="text-lg font-semibold mb-4">Where are your servers located?</h3>
+          <p class="text-gray-600 dark:text-gray-300">
+            Our servers are hosted in privacy-focused jurisdictions with strong data protection laws. We do not rely on big cloud providers like AWS or Google Cloud.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-24 bg-gradient-to-br from-blue-600 to-indigo-700 text-white">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-3xl sm:text-4xl font-bold mb-6">Join the Privacy Revolution</h2>
+      <p class="text-xl text-blue-100 mb-8">
+        Get started with secure, encrypted email today. No credit card required.
+      </p>
+      <%= link_to "Create Your Free Account", new_registration_path, class: "inline-block px-8 py-4 rounded-lg bg-white text-blue-600 font-medium hover:bg-blue-50 transition-colors" %>
+      <p class="mt-4 text-sm text-blue-200">
+        No credit card required • Free forever • Supported by ethical ads
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-gray-900 text-gray-300 pt-16 pb-8">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+      <div class="lg:col-span-1">
+        <div class="flex items-center mb-6">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+          <span class="text-xl font-bold text-white ml-2">cryptokey.email</span>
+        </div>
+        <p class="mb-6 text-gray-400">
+          Secure, private email communications with military-grade encryption. Free for everyone.
+        </p>
+      </div>
+
+      <div>
+        <h3 class="text-white font-semibold mb-4">Product</h3>
+        <ul class="space-y-3">
+          <li><a href="#features" class="text-gray-400 hover:text-white">Features</a></li>
+          <li><a href="#how-it-works" class="text-gray-400 hover:text-white">How It Works</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white">Security</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white">Apps</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-white font-semibold mb-4">Company</h3>
+        <ul class="space-y-3">
+          <li><a href="#" class="text-gray-400 hover:text-white">About Us</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white">Blog</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white">Careers</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white">Contact</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-white font-semibold mb-4">Legal</h3>
+        <ul class="space-y-3">
+          <li><a href="#" class="text-gray-400 hover:text-white">Privacy Policy</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white">Terms of Service</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white">Cookie Policy</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white">GDPR</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pt-8 border-t border-gray-800">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <p class="text-gray-500 text-sm mb-4 md:mb-0">
+          © 2025 cryptokey.email. All rights reserved.
+        </p>
+        <div class="flex space-x-6">
+          <a href="#" class="text-gray-400 hover:text-white">
+            <span class="sr-only">Twitter</span>
+            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path>
+            </svg>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-white">
+            <span class="sr-only">GitHub</span>
+            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+              <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
