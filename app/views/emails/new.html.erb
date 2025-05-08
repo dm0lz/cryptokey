@@ -18,14 +18,14 @@
             </ul>
           </div>
         <% end %>
-        <%= form.hidden_field :from, value: Current.user.email_address %>
+        <%= form.hidden_field :from_email, value: Current.user.email_address %>
         <div class="mb-4">
-          <%= form.label :to, class: "block text-sm font-medium text-gray-700" %>
-          <%= form.text_field :to, class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm", placeholder: "Recipient email address" %>
+          <%= form.label :to_email, class: "block text-sm font-medium text-gray-700" %>
+          <%= form.text_field :to_email, class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm", placeholder: "Recipient email address", value: params[:to_email] %>
         </div>
         <div class="mb-4">
           <%= form.label :subject, class: "block text-sm font-medium text-gray-700" %>
-          <%= form.text_field :subject, class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm", placeholder: "Subject" %>
+          <%= form.text_field :subject, class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm", placeholder: "Subject", value: params[:subject] %>
         </div>
         <div class="mb-6">
           <%= form.label :body, class: "block text-sm font-medium text-gray-700" %>

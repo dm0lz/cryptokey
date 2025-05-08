@@ -1,10 +1,10 @@
 class EmailsMailbox < ApplicationMailbox
   def process
-    Email.create(
-      from: mail.from,
-      to: mail.to,
+    Email.create!(
+      from_email: mail.from&.first,
+      to_email: mail.to&.first,
       subject: mail.subject,
-      body: mail.body
+      body: mail.decoded
     )
   end
 end

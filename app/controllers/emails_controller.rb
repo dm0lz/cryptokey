@@ -1,9 +1,16 @@
 class EmailsController < ApplicationController
-  before_action :set_email, only: %i[ show edit update destroy ]
+  before_action :set_email, only: %i[ show reply update destroy ]
 
   # GET /emails or /emails.json
   def index
-    @emails = Email.where(to: Current.user.email_address)
+    @emails = Email.where(to_email: Current.user.email_address)
+    if params[:q].present?
+      query = "%#{params[:q].downcase}%"
+      @emails = @emails.where(
+        "LOWER(subject) LIKE ? OR LOWER(from_email) LIKE ? OR LOWER(to_email) LIKE ?",
+        query, query, query
+      )
+    end
   end
 
   # GET /emails/1 or /emails/1.json
@@ -16,12 +23,19 @@ class EmailsController < ApplicationController
   end
 
   # GET /emails/1/edit
-  def edit
+  def reply
+    @email = @email.dup
+    @email.to_email = @email.from_email
+    @email.from_email = Current.user.email_address
+    @email.body = "\n\n___\n\n" + @email.body
   end
 
   # POST /emails or /emails.json
   def create
-    @email = Email.new(email_params)
+    sanitized_params = params.expect(email: [ :from_email, :to_email, :subject, :body ])
+    sanitized_params[:from_email] = Array(sanitized_params[:from_email]).first if sanitized_params[:from_email].is_a?(Array)
+    sanitized_params[:to_email] = Array(sanitized_params[:to_email]).first if sanitized_params[:to_email].is_a?(Array)
+    @email = Email.new(sanitized_params)
 
     respond_to do |format|
       if @email.save
@@ -37,8 +51,11 @@ class EmailsController < ApplicationController
 
   # PATCH/PUT /emails/1 or /emails/1.json
   def update
+    sanitized_params = params.expect(email: [ :from_email, :to_email, :subject, :body ])
+    sanitized_params[:from_email] = Array(sanitized_params[:from_email]).first if sanitized_params[:from_email].is_a?(Array)
+    sanitized_params[:to_email] = Array(sanitized_params[:to_email]).first if sanitized_params[:to_email].is_a?(Array)
     respond_to do |format|
-      if @email.update(email_params)
+      if @email.update(sanitized_params)
         format.html { redirect_to @email, notice: "Email was successfully updated." }
         format.json { render :show, status: :ok, location: @email }
       else
@@ -66,6 +83,6 @@ class EmailsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def email_params
-      params.expect(email: [ :from, :to, :subject, :body ])
+      params.expect(email: [ :from_email, :to_email, :subject, :body ])
     end
 end

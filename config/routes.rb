@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  resources :emails, path: :inbox
+  resources :emails, path: :inbox, only: [:index, :show, :new, :create, :destroy]
+  get "inbox/:id/reply", to: "emails#reply", as: :reply_email
   resource :session
   resource :registration, only: [:new, :create]
   resources :passwords, param: :token

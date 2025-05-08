@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_08_095908) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_08_124747) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -52,8 +52,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_08_095908) do
   end
 
   create_table "emails", force: :cascade do |t|
-    t.string "from"
-    t.string "to"
+    t.string "from_email"
+    t.string "to_email"
     t.string "subject"
     t.text "body"
     t.datetime "created_at", null: false

@@ -19,11 +19,22 @@
   <main class="flex-1 flex flex-col items-center px-2 sm:px-6 lg:px-8">
     <div class="w-full max-w-3xl mt-8">
       <div class="flex items-center justify-between mb-6">
-        <div class="relative w-full max-w-xs">
-          <input type="text" placeholder="Search emails..." class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm" />
-          <span class="absolute left-3 top-2.5 text-gray-400">
-            <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-          </span>
+        <div class="w-full max-w-xs">
+          <%= form_with url: emails_path, method: :get, local: true do %>
+            <div class="flex w-full shadow-sm border border-gray-300 rounded-lg focus-within:ring-2 focus-within:ring-indigo-500 focus-within:border-indigo-500 bg-white">
+              <div class="relative flex items-center flex-1">
+                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                  <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                </span>
+                <input type="text" name="q" value="<%= params[:q] %>" placeholder="Search emails..." class="w-full pl-10 pr-2 py-2 bg-transparent border-none rounded-l-lg focus:outline-none text-sm" />
+              </div>
+              <% if params[:q].present? %>
+                <button type="button" onclick="this.form.q.value=''; this.form.submit();" class="flex items-center justify-center px-3 pt-2.5 h-full text-gray-400 hover:text-gray-600 focus:outline-none bg-transparent border-none rounded-r-lg">
+                  <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+              <% end %>
+            </div>
+          <% end %>
         </div>
         <%= link_to "New Email", new_email_path, class: "ml-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-semibold rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition" %>
       </div>
@@ -33,7 +44,7 @@
             <%= link_to email_path(email), class: "flex items-center px-4 py-4 hover:bg-gray-50 transition group" do %>
               <div class="flex-shrink-0">
                 <span class="inline-flex items-center justify-center h-10 w-10 rounded-full bg-indigo-100 text-indigo-600 font-bold text-lg">
-                  <%= email.from[0].upcase rescue '?' %>
+                  <%= email.from_email[0].upcase rescue '?' %>
                 </span>
               </div>
               <div class="ml-4 flex-1 min-w-0">
