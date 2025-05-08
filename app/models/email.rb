@@ -11,6 +11,6 @@ class Email < ApplicationRecord
   end
 
   def parse_email(value)
-    JSON.parse(value).first
+    value.include?("[") ? JSON.parse(value).first : value
   end
 end
