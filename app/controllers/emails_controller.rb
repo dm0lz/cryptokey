@@ -28,7 +28,8 @@ class EmailsController < ApplicationController
     @email = @email.dup
     @email.to_email = @email.from_email
     @email.from_email = Current.user.email_address
-    @email.body = "\n\n___\n\n" + @email.body
+    @email.subject = "Re: #{@email.subject}"
+    @email.body = "\n\n" + @email.body
   end
 
   # POST /emails or /emails.json
