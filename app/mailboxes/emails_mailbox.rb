@@ -4,7 +4,7 @@ class EmailsMailbox < ApplicationMailbox
       from_email: mail.from&.first,
       to_email: mail.to&.first,
       subject: mail.subject,
-      body: mail.decoded
+      body: mail.body.decoded
     )
   end
 end
