@@ -3,6 +3,8 @@ class SendEmailJob < ApplicationJob
 
   def perform(email_id)
     email = Email.find(email_id)
+    return if email.to.end_with?("@cryptokey.email")
+
     Mailgun::SenderService.new(email).call
     # TODO: Replace with actual mailer logic
     # Example: UserMailer.with(email: email).send_email.deliver_later

@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :emails
+  resources :emails, path: :inbox
   resource :session
   resource :registration, only: [:new, :create]
   resources :passwords, param: :token

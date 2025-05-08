@@ -3,7 +3,7 @@ class EmailsController < ApplicationController
 
   # GET /emails or /emails.json
   def index
-    @emails = Current.user.emails
+    @emails = Email.where(to: Current.user.email_address)
   end
 
   # GET /emails/1 or /emails/1.json
@@ -21,7 +21,7 @@ class EmailsController < ApplicationController
 
   # POST /emails or /emails.json
   def create
-    @email = Current.user.emails.new(email_params)
+    @email = Email.new(email_params)
 
     respond_to do |format|
       if @email.save

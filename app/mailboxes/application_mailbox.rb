@@ -1,4 +1,5 @@
 class ApplicationMailbox < ActionMailbox::Base
   # routing /something/i => :somewhere
-  routing :all => :emails
+  routing /@cryptokey\.email\z/i => :emails
+  # routing :all => :emails
 end
