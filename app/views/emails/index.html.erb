@@ -6,14 +6,32 @@
       <h1 class="text-2xl font-bold text-gray-900">Inbox</h1>
       <div class="flex items-center space-x-4">
         <% if Current.user %>
-        <div class="flex items-center space-x-2 bg-indigo-50 px-3 py-1.5 rounded-full">
-          <span class="inline-flex items-center justify-center h-8 w-8 rounded-full bg-indigo-200 text-indigo-700 font-bold text-sm">
-            <%= Current.user.email_address[0].upcase %>
-          </span>
-          <span class="text-sm font-medium text-gray-800"><%= Current.user.email_address %></span>
-        </div>
-      <% end %>
-        <%= button_to 'Sign Out', session_path, method: :delete, form: {data: {turbo_confirm: 'Are you sure?'}}, class: "text-sm font-medium text-red-600 hover:text-red-800" %>
+          <div x-data="{ open: false }" class="relative">
+            <button
+              @click="open = !open"
+              class="flex items-center space-x-2 bg-indigo-50 px-3 py-1.5 rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-400 transition"
+              aria-haspopup="true"
+              :aria-expanded="open"
+            >
+              <span class="inline-flex items-center justify-center h-8 w-8 rounded-full bg-indigo-200 text-indigo-700 font-bold text-sm">
+                <%= Current.user.email_address[0].upcase %>
+              </span>
+              <span class="text-sm font-medium text-gray-800"><%= Current.user.email_address %></span>
+              <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </button>
+            <div
+              x-show="open"
+              @click.away="open = false"
+              class="absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-lg py-2 z-50 border border-gray-100"
+              x-transition
+            >
+              <%= link_to "Account", account_edit_path, class: "block px-4 py-2 text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 text-sm font-medium" %>
+              <%= button_to "Sign Out", session_path, method: :delete, form: {data: {turbo_confirm: 'Are you sure?'}}, class: "w-full text-left px-4 py-2 text-gray-700 hover:bg-red-50 hover:text-red-600 text-sm font-medium bg-transparent border-0" %>
+            </div>
+          </div>
+        <% end %>
       </div>
     </article>
   </header>

@@ -1,10 +1,14 @@
 Rails.application.routes.draw do
+  get "account/index"
+  get "account/edit"
+  get "account/update"
   resources :emails, path: :inbox, only: [:index, :show, :new, :create, :destroy]
   get "inbox/:id/reply", to: "emails#reply", as: :reply_email
   resource :session
   resource :registration, only: [:new, :create]
   resources :passwords, param: :token
   resources :landing_page, only: :index
+  resources :account, only: [:index, :edit, :update]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
