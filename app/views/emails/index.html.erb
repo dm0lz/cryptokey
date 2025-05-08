@@ -9,7 +9,7 @@
           <div x-data="{ open: false }" class="relative">
             <button
               @click="open = !open"
-              class="flex items-center space-x-2 bg-indigo-50 px-3 py-1.5 rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-400 transition"
+              class="flex items-center space-x-2 bg-indigo-50 px-3 py-1.5 rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-400 transition cursor-pointer"
               aria-haspopup="true"
               :aria-expanded="open"
             >
@@ -28,7 +28,7 @@
               x-transition
             >
               <%= link_to "Account", account_edit_path, class: "block px-4 py-2 text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 text-sm font-medium" %>
-              <%= button_to "Sign Out", session_path, method: :delete, form: {data: {turbo_confirm: 'Are you sure?'}}, class: "w-full text-left px-4 py-2 text-gray-700 hover:bg-red-50 hover:text-red-600 text-sm font-medium bg-transparent border-0" %>
+              <%= button_to "Sign Out", session_path, method: :delete, form: {data: {turbo_confirm: 'Are you sure?'}}, class: "w-full text-left px-4 py-2 text-gray-700 hover:bg-red-50 hover:text-red-600 text-sm font-medium bg-transparent border-0 cursor-pointer" %>
             </div>
           </div>
         <% end %>
