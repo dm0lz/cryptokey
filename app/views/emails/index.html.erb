@@ -1,85 +1,200 @@
-<% content_for :title, "Inbox" %>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PulseMail - Modern Email Client</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      function toggleSidebar() {
+        const sidebar = document.querySelector('#sidebar');
+        sidebar.classList.toggle('-translate-x-full');
+      }
 
-<div class="min-h-screen bg-gray-50">
-  <header class="bg-white shadow-sm">
-    <article class="px-4 sm:px-0 max-w-7xl mx-auto h-16 flex items-center justify-between">
-      <h1 class="text-2xl font-bold text-gray-900">Inbox</h1>
-      <div class="flex items-center space-x-4">
-        <% if Current.user %>
-          <div x-data="{ open: false }" class="relative">
-            <button
-              @click="open = !open"
-              class="flex items-center space-x-2 bg-indigo-50 px-3 py-1.5 rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-400 transition cursor-pointer"
-              aria-haspopup="true"
-              :aria-expanded="open"
-            >
-              <span class="inline-flex items-center justify-center h-8 w-8 rounded-full bg-indigo-200 text-indigo-700 font-bold text-sm">
-                <%= Current.user.email_address[0].upcase %>
-              </span>
-              <span class="text-sm font-medium text-gray-800"><%= Current.user.email_address %></span>
-              <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
-              </svg>
-            </button>
-            <div
-              x-show="open"
-              @click.away="open = false"
-              class="absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-lg py-2 z-50 border border-gray-100"
-              x-transition
-            >
-              <%= link_to "Account", account_edit_path, class: "block px-4 py-2 text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 text-sm font-medium" %>
-              <%= button_to "Sign Out", session_path, method: :delete, form: {data: {turbo_confirm: 'Are you sure?'}}, class: "w-full text-left px-4 py-2 text-gray-700 hover:bg-red-50 hover:text-red-600 text-sm font-medium bg-transparent border-0 cursor-pointer" %>
+      function toggleEmailView(show) {
+        const emailList = document.querySelector('#emailList');
+        const emailView = document.querySelector('#emailView');
+        
+        if (show) {
+          emailList.classList.add('hidden');
+          emailList.classList.remove('w-full', 'md:w-1/3');
+          emailView.classList.remove('hidden');
+          emailView.classList.add('w-full');
+        } else {
+          emailList.classList.remove('hidden');
+          emailList.classList.add('w-full', 'md:w-1/3');
+          emailView.classList.add('hidden');
+          emailView.classList.remove('w-full');
+        }
+      }
+    </script>
+  </head>
+  <body class="h-screen flex flex-col bg-gray-50">
+    <!-- Header -->
+    <header class="h-16 bg-white border-b border-gray-200 flex items-center px-4 sticky top-0 z-10">
+      <div class="flex items-center gap-4">
+        <button onclick="toggleSidebar()" class="lg:hidden p-2 rounded-md hover:bg-gray-100">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        
+        <div class="flex items-center">
+          <svg class="h-8 w-8 text-blue-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 7L12 2L2 7V17L12 22L22 17V7Z"/>
+            <path d="M2 7L12 12L22 7"/>
+            <path d="M12 22V12"/>
+          </svg>
+          <h1 class="text-xl font-bold text-gray-900 ml-2">PulseMail</h1>
+        </div>
+      </div>
+      
+      <div class="mx-4 flex-1 max-w-2xl relative hidden md:block">
+        <div class="relative">
+          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-400"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          </div>
+          <input
+            type="text"
+            placeholder="Search emails..."
+            class="block w-full pl-10 pr-4 py-2 border rounded-md bg-gray-50 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          />
+        </div>
+      </div>
+      
+      <div class="flex items-center ml-auto">
+        <button class="p-2 relative text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+          <span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-red-500"></span>
+        </button>
+        
+        <div class="ml-4">
+          <div class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center">
+            <span class="font-medium text-blue-800">JD</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="flex-1 flex overflow-hidden">
+      <!-- Sidebar -->
+      <aside id="sidebar" class="fixed inset-y-16 left-0 z-20 w-64 lg:relative lg:inset-y-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out bg-white border-r border-gray-200 h-full overflow-auto flex flex-col">
+        <div class="p-4">
+          <button class="w-full bg-blue-600 text-white px-6 py-3 rounded-md font-medium flex items-center justify-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+            Compose
+          </button>
+        </div>
+        
+        <nav class="flex-1">
+          <ul>
+            <li>
+              <button class="flex items-center justify-between w-full px-4 py-2.5 text-sm bg-blue-50 text-blue-600 font-medium">
+                <div class="flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3 text-blue-600"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>
+                  Inbox
+                </div>
+                <span class="bg-blue-600 text-white text-xs font-medium px-2 py-0.5 rounded-full">3</span>
+              </button>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="flex-1 flex">
+        <!-- Email List -->
+        <div id="emailList" class="w-full md:w-1/3 h-full border-r border-gray-200 bg-white overflow-auto">
+          <div class="py-3 px-4 border-b border-gray-200">
+            <div class="flex items-center justify-between">
+              <h2 class="font-semibold text-lg text-gray-900 flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-gray-600"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>
+                Inbox
+                <span class="ml-2 text-sm font-normal text-gray-500">(12)</span>
+              </h2>
             </div>
           </div>
-        <% end %>
-      </div>
-    </article>
-  </header>
 
-  <main class="flex-1 flex flex-col items-center px-2 sm:px-6 lg:px-8">
-    <div class="w-full max-w-7xl mt-8">
-      <div class="flex items-center justify-between mb-6">
-        <div class="w-full max-w-xs">
-          <%= form_with url: emails_path, method: :get, local: true do %>
-            <div class="flex w-full shadow-sm border border-gray-300 rounded-lg focus-within:ring-2 focus-within:ring-indigo-500 focus-within:border-indigo-500 bg-white">
-              <div class="relative flex items-center flex-1">
-                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-                  <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-                </span>
-                <input type="text" name="q" value="<%= params[:q] %>" placeholder="Search emails..." class="w-full pl-10 pr-2 py-2 bg-transparent border-none rounded-l-lg focus:outline-none text-sm" />
-              </div>
-              <% if params[:q].present? %>
-                <button type="button" onclick="this.form.q.value=''; this.form.submit();" class="flex items-center justify-center px-3 pt-2.5 h-full text-gray-400 hover:text-gray-600 focus:outline-none bg-transparent border-none rounded-r-lg">
-                  <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+          <!-- Email Items -->
+          <div class="border-b border-gray-200 px-4 py-3 cursor-pointer hover:bg-gray-50" onclick="toggleEmailView(true)">
+            <div class="flex items-center">
+              <div class="flex-shrink-0 mr-3">
+                <button class="text-gray-400 hover:text-yellow-400">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
                 </button>
-              <% end %>
-            </div>
-          <% end %>
-        </div>
-        <%= link_to "New Email", new_email_path, class: "ml-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-semibold rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition whitespace-nowrap" %>
-      </div>
-      <div class="bg-white shadow rounded-lg divide-y divide-gray-100">
-        <% if @emails.any? %>
-          <% @emails.each do |email| %>
-            <%= link_to email_path(email), class: "flex items-center px-4 py-4 hover:bg-gray-50 transition group" do %>
-              <div class="flex-shrink-0">
-                <span class="inline-flex items-center justify-center h-10 w-10 rounded-full bg-indigo-100 text-indigo-600 font-bold text-lg">
-                  <%= email.from_email[0].upcase rescue '?' %>
-                </span>
               </div>
-              <div class="ml-4 flex-1 min-w-0">
-                <div class="flex items-center justify-between">
-                  <span class="block font-medium text-gray-900 truncate group-hover:text-indigo-700"><%= email.subject.presence || '(No subject)' %></span>
-                  <span class="ml-2 flex-shrink-0 text-xs text-gray-400"><%= time_ago_in_words(email.created_at) %> ago</span>
+              
+              <div class="flex-shrink-0 mr-3">
+                <div class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center">
+                  <span class="font-medium text-blue-800">AJ</span>
                 </div>
-                <span class="block text-sm text-gray-500 truncate"><%= email.body.to_s.truncate(80) %></span>
               </div>
-            <% end %>
-          <% end %>
-        <% else %>
-          <div class="px-4 py-8 text-center text-gray-400 text-sm">No emails found.</div>
-        <% end %>
-      </div>
+              
+              <div class="min-w-0 flex-1">
+                <div class="flex justify-between items-baseline mb-0.5">
+                  <h3 class="text-sm font-semibold truncate">Alex Johnson</h3>
+                  <span class="text-xs text-gray-500 ml-2">10:30 AM</span>
+                </div>
+                
+                <h4 class="text-sm font-semibold truncate">Quarterly Report Review</h4>
+                
+                <div class="flex items-center mt-1">
+                  <p class="text-xs text-gray-500 truncate mr-2">I've attached the quarterly report for your review. Please let me know if you have any questions...</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Email View -->
+        <div id="emailView" class="hidden md:block md:w-2/3 h-full bg-white overflow-auto">
+          <div class="py-3 px-6 border-b border-gray-200 flex items-center justify-between">
+            <button onclick="toggleEmailView(false)" class="md:hidden text-gray-500 hover:text-gray-900">
+              ← Back
+            </button>
+            <div class="flex gap-1">
+              <button class="p-1.5 text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-full">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              </button>
+              <button class="p-1.5 text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-full">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+              </button>
+            </div>
+          </div>
+          
+          <div class="px-6 py-4">
+            <h1 class="text-xl font-semibold text-gray-900 mb-4">Quarterly Report Review</h1>
+            
+            <div class="flex justify-between items-start mb-4">
+              <div class="flex">
+                <div class="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center">
+                  <span class="font-medium text-blue-800">AJ</span>
+                </div>
+                
+                <div class="ml-3">
+                  <div class="flex items-center">
+                    <h3 class="font-medium text-gray-900">Alex Johnson</h3>
+                    <span class="ml-2 text-sm text-gray-500">&lt;alex.johnson@example.com&gt;</span>
+                  </div>
+                  
+                  <div class="text-sm text-gray-500">
+                    to me
+                  </div>
+                </div>
+              </div>
+              
+              <div class="text-sm text-gray-500">
+                Mar 15, 2024, 10:30 AM
+              </div>
+            </div>
+            
+            <div class="prose prose-sm max-w-none text-gray-800 my-6">
+              <p>Hi there,</p>
+              <p>I've attached the quarterly report for your review. Please let me know if you have any questions or concerns.</p>
+              <p>We've seen a 15% increase in user engagement since the last quarter, which is very promising.</p>
+              <p>Best regards,<br>Alex</p>
+            </div>
+          </div>
+        </div>
+      </main>
     </div>
-  </main>
-</div>
+  </body>
+</html>
