@@ -5,7 +5,7 @@ class User < ApplicationRecord
   normalizes :email_address, :recovery_email, with: ->(e) { e.strip.downcase }
 
   validates :email_address, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
-  validates :recovery_email, format: { with: URI::MailTo::EMAIL_REGEXP }
+  validates :recovery_email, format: { with: URI::MailTo::EMAIL_REGEXP }, allow_blank: true
   validates :email_address, format: { with: /\A[^@]+@cryptokey\.email\z/, message: "must end with cryptokey.email" }
   validates :email_address, uniqueness: true
   validates :password, length: { minimum: 8 }, if: -> { password.present? }
