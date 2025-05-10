@@ -123,11 +123,11 @@
             <div x-data="{ open: false }" class="relative">
               <button
                 @click="open = !open"
-                class="flex items-center space-x-2 bg-gray-600 text-gray-200 px-3 py-1.5 rounded-full focus:outline-none transition cursor-pointer"
+                class="flex items-center space-x-2 text-gray-200 px-3 py-1.5 focus:outline-none transition cursor-pointer"
                 aria-haspopup="true"
                 :aria-expanded="open"
               >
-                <span class="inline-flex items-center bg-gray-700 justify-center h-8 w-8 rounded-full font-bold text-sm">
+                <span class="inline-flex items-center bg-gray-600 justify-center h-8 w-8 rounded-full font-bold text-sm">
                   <%= Current.user.email_address[0].upcase %>
                 </span>
                 <span class="text-sm font-medium"><%= Current.user.email_address %></span>
