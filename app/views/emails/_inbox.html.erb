@@ -238,7 +238,7 @@
                 </div>
                 <div class="min-w-0 flex-1">
                   <div class="flex justify-between items-baseline mb-0.5">
-                    <h3 class="text-sm font-semibold truncate"><%= email.from_email.presence || "Unknown sender" %></h3>
+                    <h3 class="text-sm font-semibold truncate no-underline"><%= email.from_email.presence || "Unknown sender" %></h3>
                     <span class="text-xs text-gray-400 ml-2"><%= email.created_at&.strftime("%H:%M") %></span>
                   </div>
                   <h4 class="text-sm font-semibold truncate"><%= email.subject.presence || "(No subject)" %></h4>
