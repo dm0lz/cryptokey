@@ -26,17 +26,19 @@
                   Reply
                 </a>
               <% end %>
-              <form data-turbo="false" class="inline" method="post" action="/inbox/${emailId}" onsubmit="return confirm('Are you sure you want to remove this email?');" style="display:inline;">
-                <input type="hidden" name="_method" value="delete" autocomplete="off">
-                <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>" autocomplete="off">
-                <button class="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-200 bg-gray-700 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" type="submit">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
-                    <path d="M3 6h18"></path>
-                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                  </svg>
-                  Remove
-                </button>
-              </form>
+              <div>
+                <form data-turbo="false" class="inline" method="post" action="/inbox/${emailId}" onsubmit="return confirm('Are you sure you want to remove this email?');" style="display:inline;">
+                  <input type="hidden" name="_method" value="delete" autocomplete="off">
+                  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>" autocomplete="off">
+                  <button class="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-200 bg-gray-700 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" type="submit">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
+                      <path d="M3 6h18"></path>
+                      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                    </svg>
+                    Remove
+                  </button>
+                </form>
+              </div>
             </div>
           </div>
 
@@ -51,7 +53,7 @@
                   </div>
                   <div class="ml-3">
                     <div class="flex items-center">
-                      <h3 class="font-medium">${selectedEmail.fromEmail || 'Unknown sender'}</h3>
+                      <h3 class="font-medium hidden sm:block">${selectedEmail.fromEmail || 'Unknown sender'}</h3>
                       <span class="ml-2 text-sm">&lt;${selectedEmail.fromEmail}&gt;</span>
                     </div>
                     <div class="text-sm text-gray-400">
