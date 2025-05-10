@@ -3,7 +3,7 @@
   <% if params[:selected_email_id].present? && (selected_email = @emails.find { |e| e.id.to_s == params[:selected_email_id].to_s }) %>
     <div class="w-full h-full bg-white overflow-auto flex flex-col">
       <!-- Action Bar -->
-      <div class="py-3 px-6 border-b border-gray-200 flex items-center justify-between bg-white sticky top-0 z-10">
+      <div class="py-2 px-6 border-b border-gray-200 flex items-center justify-between bg-white sticky top-0 z-10">
         <div class="flex items-center">
           <button type="button" onclick="backToList()" class="md:hidden text-gray-500 hover:text-gray-900 mr-4">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
