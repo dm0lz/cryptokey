@@ -20,10 +20,12 @@
               </button>
             </div>
             <div class="flex items-center space-x-2">
-              <a href="/inbox/${emailId}/reply" class="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-200 bg-gray-700 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-                Reply
-              </a>
+              <% if path == 'inbox' %>
+                <a href="/inbox/${emailId}/reply" class="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-200 bg-gray-700 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                  Reply
+                </a>
+              <% end %>
               <form data-turbo="false" class="inline" method="post" action="/inbox/${emailId}" onsubmit="return confirm('Are you sure you want to remove this email?');" style="display:inline;">
                 <input type="hidden" name="_method" value="delete" autocomplete="off">
                 <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>" autocomplete="off">
@@ -145,7 +147,7 @@
 
   <div class="flex-1 flex overflow-hidden z-10">
     <!-- Sidebar -->
-    <aside id="sidebar" class="bg-gray-800 fixed inset-y-16 left-0 w-64 lg:relative lg:inset-y-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out border-r border-gray-500 h-full overflow-auto flex flex-col">
+    <aside id="sidebar" class="z-30 bg-gray-800 fixed inset-y-16 left-0 w-64 lg:relative lg:inset-y-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out border-r border-gray-500 h-full overflow-auto flex flex-col">
       <div class="p-4">
         <%= form_with url: emails_path, method: :get, local: true do %>
           <div class="flex w-full shadow-sm border border-gray-300 rounded-lg focus-within:ring-2 focus-within:ring-indigo-500 focus-within:border-indigo-500 text-gray-400">
