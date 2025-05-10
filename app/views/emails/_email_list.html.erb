@@ -1,5 +1,5 @@
 <div id="emailList" class="w-full h-full border-r border-gray-200 bg-white overflow-auto">
-  <div class="py-3 px-4 border-b border-gray-200">
+  <div class="h-12 px-4 border-b border-gray-200">
     <div class="flex items-center justify-between">
       <h2 class="font-semibold text-lg text-gray-900 flex items-center">
         Inbox
@@ -9,14 +9,16 @@
   </div>
   <% emails.each do |email| %>
     <div class="border-b border-gray-200 px-4 py-3 cursor-pointer hover:bg-gray-50"
+         data-email-id="<%= email.id %>"
+         data-subject="<%= email.subject %>"
+         data-from-email="<%= email.from_email %>"
+         data-to-email="<%= email.to_email %>"
+         data-created-at="<%= email.created_at&.strftime('%b %d, %Y, %H:%M') %>"
+         data-body="<%= email.body %>"
          onclick="showEmail(<%= email.id %>)">
       <div class="flex items-center">
-        <div class="flex-shrink-0 mr-3">
-          <div class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center">
-            <span class="font-medium text-blue-800">
-              <%= (email.from_email.presence || "?")[0].upcase %>
-            </span>
-          </div>
+        <div class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center mr-3">
+          <span class="font-medium text-blue-800"><%= (email.from_email.presence || '?')[0].upcase %></span>
         </div>
         <div class="min-w-0 flex-1">
           <div class="flex justify-between items-baseline mb-0.5">

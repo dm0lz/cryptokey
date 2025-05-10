@@ -5,20 +5,93 @@
   }
 
   function showEmail(emailId) {
-    Turbo.visit(`?selected_email_id=${emailId}`, { frame: "email_view" });
-    if (window.innerWidth < 768) {
-      document.querySelector('#emailList').style.display = 'none';
+    const emailView = document.querySelector('#email_view');
+    const emailElement = document.querySelector(`[data-email-id="${emailId}"]`);
+    const selectedEmail = emailElement.dataset;
+    if (emailView) {
+      const emailContent = `
+        <div class="w-full h-full bg-white overflow-auto flex flex-col">
+          <!-- Action Bar -->
+          <div class="h-12 px-6 border-b border-gray-200 flex items-center justify-between bg-white sticky top-0 z-10">
+            <div class="flex items-center">
+              <button type="button" onclick="backToList()" class="md:hidden text-gray-500 hover:text-gray-900 mr-4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+              </button>
+            </div>
+            <div class="flex items-center space-x-2">
+              <a href="/inbox/${emailId}/reply" class="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                Reply
+              </a>
+              <form data-turbo="false" class="inline" method="post" action="/inbox/${emailId}" onsubmit="return confirm('Are you sure you want to remove this email?');" style="display:inline;">
+                <input type="hidden" name="_method" value="delete" autocomplete="off">
+                <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>" autocomplete="off">
+                <button class="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" type="submit">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
+                    <path d="M3 6h18"></path>
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                  </svg>
+                  Remove
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <!-- Email Content -->
+          <div class="flex-1 overflow-auto">
+            <div class="px-6 py-4">
+              <h1 class="text-xl font-semibold text-gray-900 mb-4">${selectedEmail.subject || '(No subject)'}</h1>
+              <div class="flex justify-between items-start mb-4">
+                <div class="flex">
+                  <div class="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center">
+                    <span class="font-medium text-blue-800">${(selectedEmail.fromEmail || '?')[0].toUpperCase()}</span>
+                  </div>
+                  <div class="ml-3">
+                    <div class="flex items-center">
+                      <h3 class="font-medium text-gray-900">${selectedEmail.fromEmail || 'Unknown sender'}</h3>
+                      <span class="ml-2 text-sm text-gray-500">&lt;${selectedEmail.fromEmail}&gt;</span>
+                    </div>
+                    <div class="text-sm text-gray-500">
+                      to ${selectedEmail.toEmail}
+                    </div>
+                  </div>
+                </div>
+                <div class="text-sm hidden md:block text-gray-500">
+                  ${selectedEmail.createdAt}
+                </div>
+              </div>
+              <div class="text-sm block md:hidden text-gray-500">
+                ${selectedEmail.createdAt}
+              </div>
+              <div class="prose prose-sm max-w-none text-gray-800 my-6">
+                ${selectedEmail.body}
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      emailView.innerHTML = emailContent;
+      emailView.style.display = 'block';
+      
+      if (window.innerWidth < 768) {
+        const emailList = document.querySelector('#emailList');
+        if (emailList) {
+          emailList.style.display = 'none';
+        }
+      }
+    } else {
+      console.error('Email view container not found');
     }
   }
 
   function backToList() {
-    document.querySelector('#email_view').innerHTML = "";
-    Turbo.visit(window.location.pathname, { 
-      frame: "email_view",
-      action: "replace"
-    });
-    if (window.innerWidth < 768) {
-      document.querySelector('#emailList').style.display = 'block';
+    const emailList = document.querySelector('#emailList');
+    const emailView = document.querySelector('#email_view');
+    
+    if (emailList && emailView) {
+      emailList.style.display = 'block';
+      emailView.style.display = 'none';
     }
   }
 </script>
@@ -111,9 +184,11 @@
     </aside>
 
     <!-- Main Content -->
-    <main class="grid md:grid-cols-2 h-screen w-full">
-      <%= render partial: "email_list", locals: { emails: @emails } %>
-      <%= render partial: "email_view", locals: { selected_email: @emails.find_by(id: params[:selected_email_id]) } %>
+    <main class="flex-1 flex w-screen">
+      <div class="grid sm:grid-cols-2 w-full">
+        <%= render partial: "email_list", locals: { emails: @emails } %>
+        <div id="email_view"></div>
+      </div>
     </main>
   </div>
 </div>
