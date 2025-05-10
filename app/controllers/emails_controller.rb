@@ -1,17 +1,11 @@
 class EmailsController < ApplicationController
+  include EmailSearchable
   before_action :set_email, only: %i[ show reply update destroy ]
 
   # GET /emails or /emails.json
   def index
-    @emails = Email.where(to_email: Current.user.email_address)
-    if params[:q].present?
-      query = "%#{params[:q].downcase}%"
-      @emails = @emails.where(
-        "LOWER(subject) LIKE ? OR LOWER(from_email) LIKE ? OR LOWER(to_email) LIKE ?",
-        query, query, query
-      )
-    end
-    @emails = @emails.order(created_at: :desc)
+    @inbox_emails = inbox_emails
+    @sent_emails = sent_emails
   end
 
   # GET /emails/1 or /emails/1.json
