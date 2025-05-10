@@ -1,44 +1,89 @@
 <!-- Email View -->
 <turbo-frame id="email_view">
   <% if params[:selected_email_id].present? && (selected_email = @emails.find { |e| e.id.to_s == params[:selected_email_id].to_s }) %>
-    <div class="w-full h-full bg-white overflow-auto">
-      <div class="py-3 px-6 border-b border-gray-200 flex items-center justify-between">
-        <button type="button" onclick="backToList()" class="md:hidden text-gray-500 hover:text-gray-900">
-          ← Back
-        </button>
+    <div class="w-full h-full bg-white overflow-auto flex flex-col">
+      <!-- Action Bar -->
+      <div class="py-3 px-6 border-b border-gray-200 flex items-center justify-between bg-white sticky top-0 z-10">
+        <div class="flex items-center">
+          <button type="button" onclick="backToList()" class="md:hidden text-gray-500 hover:text-gray-900 mr-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          </button>
+          <div class="flex items-center space-x-2">
+            <%= link_to reply_email_path(selected_email), class: "inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500", data: { turbo: false } do %>
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              Reply
+            <% end %>
+            <%= button_to email_path(selected_email),
+                          method: :delete,
+                          form: { data: { turbo: false }, class: "inline" },
+                          class: "inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" do %>
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
+                <path d="M3 6h18"/>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+              </svg>
+              Remove
+            <% end %>
+          </div>
+        </div>
+        <div class="flex items-center space-x-2">
+          <button class="p-2 text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-full" title="More actions">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+          </button>
+        </div>
       </div>
-      <div class="px-6 py-4">
-        <h1 class="text-xl font-semibold text-gray-900 mb-4"><%= selected_email.subject.presence || '(No subject)' %></h1>
-        <div class="flex justify-between items-start mb-4">
-          <div class="flex">
-            <div class="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center">
-              <span class="font-medium text-blue-800"><%= (selected_email.from_email.presence || '?')[0].upcase %></span>
+
+      <!-- Email Content -->
+      <div class="flex-1 overflow-auto">
+        <div class="px-6 py-4">
+          <h1 class="text-xl font-semibold text-gray-900 mb-4"><%= selected_email.subject.presence || '(No subject)' %></h1>
+          <div class="flex justify-between items-start mb-4">
+            <div class="flex">
+              <div class="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center">
+                <span class="font-medium text-blue-800"><%= (selected_email.from_email.presence || '?')[0].upcase %></span>
+              </div>
+              <div class="ml-3">
+                <div class="flex items-center">
+                  <h3 class="font-medium text-gray-900"><%= selected_email.from_email.presence || 'Unknown sender' %></h3>
+                  <span class="ml-2 text-sm text-gray-500">&lt;<%= selected_email.from_email %>&gt;</span>
+                </div>
+                <div class="text-sm text-gray-500">
+                  to <%= selected_email.to_email %>
+                </div>
+              </div>
             </div>
-            <div class="ml-3">
-              <div class="flex items-center">
-                <h3 class="font-medium text-gray-900"><%= selected_email.from_email.presence || 'Unknown sender' %></h3>
-                <span class="ml-2 text-sm text-gray-500">&lt;<%= selected_email.from_email %>&gt;</span>
-              </div>
-              <div class="text-sm text-gray-500">
-                to <%= selected_email.to_email %>
-              </div>
+            <div class="text-sm hidden md:block text-gray-500">
+              <%= selected_email.created_at&.strftime('%b %d, %Y, %H:%M') %>
             </div>
           </div>
-          <div class="text-sm hidden md:block text-gray-500">
+          <div class="text-sm block md:hidden text-gray-500">
             <%= selected_email.created_at&.strftime('%b %d, %Y, %H:%M') %>
           </div>
+          <div class="prose prose-sm max-w-none text-gray-800 my-6">
+            <%= simple_format(selected_email.body) %>
+          </div>
         </div>
-        <div class="text-sm block md:hidden text-gray-500">
-          <%= selected_email.created_at&.strftime('%b %d, %Y, %H:%M') %>
-        </div>
-        <div class="prose prose-sm max-w-none text-gray-800 my-6">
-          <%= simple_format(selected_email.body) %>
+      </div>
+
+      <!-- Reply Bar -->
+      <div class="border-t border-gray-200 p-4 bg-white">
+        <div class="flex items-center space-x-4">
+          <%= link_to reply_email_path(selected_email, reply_all: true), class: "inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" do %>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 10h.01"/><path d="M12 10h.01"/><path d="M16 10h.01"/></svg>
+            Reply All
+          <% end %>
+          <%= link_to reply_email_path(selected_email, forward: true), class: "inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" do %>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+            Forward
+          <% end %>
         </div>
       </div>
     </div>
   <% else %>
     <div class="w-full md:w-2/3 h-full bg-white overflow-auto flex items-center justify-center text-gray-400">
-      <span>Select an email to view</span>
+      <div class="text-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="mx-auto mb-4"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <p>Select an email to view</p>
+      </div>
     </div>
   <% end %>
 </turbo-frame>
