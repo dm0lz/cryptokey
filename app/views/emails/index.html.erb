@@ -12,7 +12,11 @@
   }
 
   function backToList() {
-    Turbo.visit(window.location.pathname, { frame: "email_view" });
+    document.querySelector('#email_view').innerHTML = "";
+    Turbo.visit(window.location.pathname, { 
+      frame: "email_view",
+      action: "replace"
+    });
     if (window.innerWidth < 768) {
       document.querySelector('#emailList').style.display = 'block';
     }
@@ -109,9 +113,7 @@
     <!-- Main Content -->
     <main class="grid md:grid-cols-2 h-screen w-full">
       <%= render partial: "email_list", locals: { emails: @emails } %>
-      <turbo-frame id="email_view">
-        <%= render partial: "email_view", locals: { selected_email: @emails.find_by(id: params[:selected_email_id]) } %>
-      </turbo-frame>
+      <%= render partial: "email_view", locals: { selected_email: @emails.find_by(id: params[:selected_email_id]) } %>
     </main>
   </div>
 </div>
