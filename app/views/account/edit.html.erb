@@ -1,11 +1,11 @@
 <% content_for :title, "Account Settings" %>
 
-<div class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+<div class="min-h-screen bg-gray-800 text-gray-200 py-12 px-4 sm:px-6 lg:px-8">
   <div class="max-w-md mx-auto">
-    <div class="bg-white py-8 px-6 shadow rounded-lg sm:px-10">
+    <div class="bg-gray-700 py-8 px-6 shadow rounded-lg sm:px-10">
       <div class="mb-8">
-        <h2 class="text-2xl font-bold text-gray-900">Account Settings</h2>
-        <p class="mt-1 text-sm text-gray-600">Update your account information</p>
+        <h2 class="text-2xl font-bold">Account Settings</h2>
+        <p class="mt-1 text-sm">Update your account information</p>
       </div>
 
       <% if flash[:notice] %>
@@ -22,12 +22,12 @@
 
       <%= form_with model: @user, url: account_index_path, method: :patch, class: "space-y-6" do |form| %>
         <div>
-          <%= form.label :recovery_email, class: "block text-sm font-medium text-gray-700" %>
+          <%= form.label :recovery_email, class: "block text-sm font-medium" %>
           <div class="mt-1">
             <%= form.email_field :recovery_email, 
                 required: true,
                 autocomplete: "email",
-                class: "appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm",
+                class: "appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none sm:text-sm",
                 placeholder: "you@your.email" %>
           </div>
           <% if @user.errors[:recovery_email].any? %>
@@ -37,10 +37,10 @@
 
         <div class="flex items-center justify-between">
           <%= form.submit "Update Email", 
-              class: "flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition" %>
+              class: "flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-semibold text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition" %>
           
           <%= link_to "Back to Inbox", emails_path, 
-              class: "text-sm font-medium text-gray-600 hover:text-gray-900" %>
+              class: "text-sm font-medium" %>
         </div>
       <% end %>
     </div>
